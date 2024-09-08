@@ -1,19 +1,19 @@
 // src/App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './components/Home';
-import About from './components/About';
+import Home from './components/Home'; // Ensure correct file extension and path
 import Profile from './components/Profile';
-import BlogPost from './components/BlogPost';
 import NotFound from './components/NotFound';
+import Login from './components/Login';
 import ProtectedRoute from './components/ProtectedRoute';
+import UserProfile from './components/UserProfile';
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/login" element={<Login />} />
         <Route
           path="/profile/*"
           element={
@@ -22,7 +22,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/blog/:id" element={<BlogPost />} />
+        <Route path="/user/:userId" element={<UserProfile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
