@@ -3,9 +3,9 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 
 function BlogPost() {
-  const { postId } = useParams();
+  const { id } = useParams(); // Ensure this matches ":id" in the route
 
-  return <div>Reading blog post with ID: {postId}</div>;
+  return <div>Reading blog post with ID: {id}</div>;
 }
 
 export default BlogPost;
