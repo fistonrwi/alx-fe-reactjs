@@ -8,8 +8,6 @@ import BlogPost from './components/BlogPost';
 import NotFound from './components/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
 
-const isAuthenticated = false; // Simulate an authentication check
-
 function App() {
   return (
     <Router>
@@ -19,12 +17,11 @@ function App() {
         <Route
           path="/profile/*"
           element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
+            <ProtectedRoute>
               <Profile />
             </ProtectedRoute>
           }
         />
-        {/* Correct dynamic route to match "/blog/:id" */}
         <Route path="/blog/:id" element={<BlogPost />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
