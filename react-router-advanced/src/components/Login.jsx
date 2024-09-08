@@ -1,8 +1,13 @@
 // src/components/Login.jsx
-import React from 'react';
+import React from "react";
 
-function Login() {
-  return <div><h1>Login Page</h1></div>;
-}
+const Login = () => {
+  return (
+    <div>
+      <h2>Login Page</h2>
+      <p>Simulate login here.</p>
+    </div>
+  );
+};
 
 export default Login;

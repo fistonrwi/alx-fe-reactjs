@@ -1,8 +1,12 @@
-// src/components/ProfileSettings.jsx
 import React from 'react';
 
 function ProfileSettings() {
-  return <div><h2>Profile Settings</h2></div>;
+  return (
+    <div>
+      <h2>Profile Settings</h2>
+      <p>Manage your profile settings here.</p>
+    </div>
+  );
 }
 
 export default ProfileSettings;

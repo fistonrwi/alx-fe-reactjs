@@ -1,30 +1,45 @@
 // src/App.jsx
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './components/Home'; // Ensure correct file extension and path
-import Profile from './components/Profile';
-import NotFound from './components/NotFound';
-import Login from './components/Login';
-import ProtectedRoute from './components/ProtectedRoute';
-import UserProfile from './components/UserProfile';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import Profile from "./components/Profile";
+import NotFound from "./components/NotFound";
+import Login from "./components/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { useAuth } from "./hooks/useAuth";
 
 function App() {
+  const { login, logout, isAuthenticated } = useAuth();
+
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/profile/*"
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/user/:userId" element={<UserProfile />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <div>
+        <nav>
+          <a href="/">Home</a>
+          {isAuthenticated ? (
+            <>
+              <a href="/profile">Profile</a>
+              <button onClick={logout}>Logout</button>
+            </>
+          ) : (
+            <button onClick={login}>Login</button>
+          )}
+        </nav>
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
     </Router>
   );
 }
