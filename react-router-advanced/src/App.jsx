@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import Profile from "./components/Profile";
 import NotFound from "./components/NotFound";
 import Login from "./components/Login";
+import BlogPost from "./components/BlogPost";  // Import the BlogPost component
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth } from "./hooks/useAuth";
 
@@ -37,6 +38,7 @@ function App() {
             }
           />
           <Route path="/login" element={<Login />} />
+          <Route path="/blog/:id" element={<BlogPost />} /> {/* Add this line */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
