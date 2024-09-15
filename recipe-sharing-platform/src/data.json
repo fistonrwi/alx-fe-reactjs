@@ -1,14 +1,14 @@
 [
   {
     "id": 1,
-    "title": "Recipe Title 1",
-    "summary": "A brief summary of the recipe.",
-    "image": "url_to_image_1.jpg"
+    "title": "Spaghetti Carbonara",
+    "summary": "A classic Italian pasta dish with eggs, cheese, bacon, and black pepper.",
+    "image": "https://via.placeholder.com/150"
   },
   {
     "id": 2,
-    "title": "Recipe Title 2",
-    "summary": "A brief summary of another recipe.",
-    "image": "url_to_image_2.jpg"
+    "title": "Chicken Tikka Masala",
+    "summary": "Chunks of grilled chicken (tikka) cooked in a smooth buttery & creamy tomato based gravy.",
+    "image": "https://via.placeholder.com/150"
   }
 ]
