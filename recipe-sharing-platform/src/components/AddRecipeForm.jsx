@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const AddRecipeForm = () => {
   const [title, setTitle] = useState('');
   const [ingredients, setIngredients] = useState('');
-  const [instructions, setInstructions] = useState('');
+  const [steps, setSteps] = useState(''); // Changed to 'steps' to reflect preparation steps
   const [image, setImage] = useState(null);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ const AddRecipeForm = () => {
     const newErrors = {};
     if (!title) newErrors.title = 'Title is required';
     if (!ingredients) newErrors.ingredients = 'Ingredients are required';
-    if (!instructions) newErrors.instructions = 'Instructions are required';
+    if (!steps) newErrors.steps = 'Steps are required'; // Validation for steps
     if (!image) newErrors.image = 'Image is required';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -23,12 +23,12 @@ const AddRecipeForm = () => {
     e.preventDefault();
     if (validateForm()) {
       // Simulate form submission
-      console.log({ title, ingredients, instructions, image });
+      console.log({ title, ingredients, steps, image });
 
       // Clear form fields
       setTitle('');
       setIngredients('');
-      setInstructions('');
+      setSteps('');
       setImage(null);
 
       // Redirect to home page after submission
@@ -71,15 +71,15 @@ const AddRecipeForm = () => {
         </div>
 
         <div>
-          <label htmlFor="instructions" className="block text-lg font-medium">Instructions</label>
+          <label htmlFor="steps" className="block text-lg font-medium">Steps</label>
           <textarea
-            id="instructions"
-            value={instructions}
-            onChange={(e) => setInstructions(e.target.value)}
+            id="steps"
+            value={steps}
+            onChange={(e) => setSteps(e.target.value)}
             rows="4"
             className="mt-1 block w-full border border-gray-300 rounded-lg p-2"
           />
-          {errors.instructions && <p className="text-red-500 text-sm">{errors.instructions}</p>}
+          {errors.steps && <p className="text-red-500 text-sm">{errors.steps}</p>}
         </div>
 
         <div>
