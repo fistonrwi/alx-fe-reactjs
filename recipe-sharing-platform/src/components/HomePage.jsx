@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import recipeData from '../data.json';
 
 const HomePage = () => {
@@ -18,13 +19,15 @@ const HomePage = () => {
             key={recipe.id}
             className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-4"
           >
-            <img
-              src={recipe.image}
-              alt={recipe.title}
-              className="w-full h-48 object-cover rounded-t-lg mb-4"
-            />
-            <h2 className="text-xl font-semibold">{recipe.title}</h2>
-            <p>{recipe.summary}</p>
+            <Link to={`/recipe/${recipe.id}`}>
+              <img
+                src={recipe.image}
+                alt={recipe.title}
+                className="w-full h-48 object-cover rounded-t-lg mb-4"
+              />
+              <h2 className="text-xl font-semibold">{recipe.title}</h2>
+              <p>{recipe.summary}</p>
+            </Link>
           </div>
         ))}
       </div>
