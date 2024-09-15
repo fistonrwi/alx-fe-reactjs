@@ -48,13 +48,13 @@ const RecipeDetail = () => {
   ];
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 shadow-lg rounded-lg">
       <h1 className="text-3xl font-bold mb-4">{recipe.title}</h1>
       <div className="flex flex-col md:flex-row md:space-x-4">
         <img
           src={recipe.image}
           alt={recipe.title}
-          className="w-full md:w-1/3 h-48 object-cover rounded-lg mb-4 md:mb-0"
+          className="w-full md:w-1/3 h-48 object-cover rounded-lg mb-4 md:mb-0 shadow-lg"
         />
         <div className="md:w-2/3">
           <h2 className="text-xl font-semibold mb-2">Ingredients</h2>
