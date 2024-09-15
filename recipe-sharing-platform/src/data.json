@@ -1,15 +1,14 @@
 [
-    {
-      "name": "Spaghetti Bolognese",
-      "description": "A classic Italian pasta dish with a rich meat sauce."
-    },
-    {
-      "name": "Chicken Curry",
-      "description": "A flavorful Indian curry made with tender chicken pieces."
-    },
-    {
-      "name": "Vegetable Stir-Fry",
-      "description": "A quick and healthy stir-fry with fresh vegetables."
-    }
-  ]
-  
+  {
+    "id": 1,
+    "title": "Recipe Title 1",
+    "summary": "A brief summary of the recipe.",
+    "image": "url_to_image_1.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Recipe Title 2",
+    "summary": "A brief summary of another recipe.",
+    "image": "url_to_image_2.jpg"
+  }
+]
