@@ -5,6 +5,7 @@ const AddRecipeForm = () => {
   const [ingredients, setIngredients] = useState('');
   const [steps, setSteps] = useState('');
   const [image, setImage] = useState(null);
+  const [errors, setErrors] = useState({});
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -13,14 +14,30 @@ const AddRecipeForm = () => {
     }
   };
 
+  const validateForm = () => {
+    const newErrors = {};
+    if (!title) newErrors.title = 'Title is required';
+    if (!ingredients) newErrors.ingredients = 'Ingredients are required';
+    if (!steps) newErrors.steps = 'Preparation steps are required';
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Perform form validation and submission here
-    if (!title || !ingredients || !steps) {
-      alert('All fields are required!');
-      return;
-    }
+    setErrors({}); // Clear previous errors
+    if (!validateForm()) return; // Validate and stop if there are errors
+
+    // Form is valid, handle submission
     console.log({ title, ingredients, steps, image });
+    // Reset form fields
+    setTitle('');
+    setIngredients('');
+    setSteps('');
+    setImage(null);
   };
 
   return (
@@ -34,9 +51,9 @@ const AddRecipeForm = () => {
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            required
+            className={`mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${errors.title ? 'border-red-500' : ''}`}
           />
+          {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title}</p>}
         </div>
         <div className="mb-4">
           <label htmlFor="ingredients" className="block text-sm font-medium text-gray-700">Ingredients</label>
@@ -45,9 +62,9 @@ const AddRecipeForm = () => {
             value={ingredients}
             onChange={(e) => setIngredients(e.target.value)}
             rows="4"
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            required
+            className={`mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${errors.ingredients ? 'border-red-500' : ''}`}
           />
+          {errors.ingredients && <p className="text-red-500 text-sm mt-1">{errors.ingredients}</p>}
         </div>
         <div className="mb-4">
           <label htmlFor="steps" className="block text-sm font-medium text-gray-700">Preparation Steps</label>
@@ -56,9 +73,9 @@ const AddRecipeForm = () => {
             value={steps}
             onChange={(e) => setSteps(e.target.value)}
             rows="4"
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            required
+            className={`mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${errors.steps ? 'border-red-500' : ''}`}
           />
+          {errors.steps && <p className="text-red-500 text-sm mt-1">{errors.steps}</p>}
         </div>
         <div className="mb-4">
           <label htmlFor="image" className="block text-sm font-medium text-gray-700">Recipe Image</label>
