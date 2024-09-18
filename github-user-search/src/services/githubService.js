@@ -1,20 +1,14 @@
-// src/services/githubService.js
 import axios from 'axios';
-
-const apiClient = axios.create({
-  baseURL: 'https://api.github.com',
-  headers: {
-    'Content-Type': 'application/json',
-    // Authorization: `token ${process.env.REACT_APP_GITHUB_API_KEY}`, // Uncomment if using an API key
-  },
-});
 
 export const fetchUserData = async (username) => {
   try {
-    const response = await apiClient.get(`/users/${username}`);
+    const response = await axios.get(`https://api.github.com/users/${username}`, {
+      headers: {
+        Authorization: `token ${process.env.REACT_APP_GITHUB_API_KEY}`, // Make sure API key is set
+      },
+    });
     return response.data;
   } catch (error) {
-    console.error('Error fetching user data:', error);
-    throw error;
+    throw new Error('User not found'); // Ensure this throws when user doesn't exist
   }
 };
