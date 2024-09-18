@@ -1,15 +1,14 @@
 // src/services/apiService.js
 import axios from 'axios';
 
-// Create an instance of axios with default settings
 const apiClient = axios.create({
   baseURL: 'https://api.github.com',
   headers: {
     'Content-Type': 'application/json',
+    // Authorization: `token ${process.env.REACT_APP_GITHUB_API_KEY}`, // Uncomment if using API key
   },
 });
 
-// Function to get user data from GitHub API
 export const fetchUserData = async (username) => {
   try {
     const response = await apiClient.get(`/users/${username}`);
