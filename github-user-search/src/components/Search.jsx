@@ -16,9 +16,9 @@ const Search = ({ setUserData }) => {
     try {
       const data = await fetchUserData(username); // Call API
       setUser(data);    // Set the returned user data
-      setUserData(data); // Pass user data up
+      setUserData(data); // Pass user data up if necessary
     } catch (err) {
-      setError("Looks like we can't find the user"); // Set error message
+      setError(err.message); // Use the error message from the catch block
     } finally {
       setLoading(false); // Stop loading
     }
@@ -41,7 +41,7 @@ const Search = ({ setUserData }) => {
       {loading && <p>Loading...</p>}
 
       {/* Display Error Message */}
-      {error && <p>{error}</p>}
+      {error && <p>{error}</p>} {/* This will show the error */}
 
       {/* Display User Information */}
       {user && (
