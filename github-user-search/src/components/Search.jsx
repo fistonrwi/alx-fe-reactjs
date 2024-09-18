@@ -1,46 +1,58 @@
-// src/components/Search.jsx
-import React, { useState } from 'react';
-import { fetchUserData } from '../services/apiService';
-import { fetchUserData } from '../services/githubService';
+import React, { useState } from "react";
+import { fetchUserData } from "../services/githubService"; // Ensure this service is correct
 
-const Search = () => {
-  const [username, setUsername] = useState('');
-  const [userData, setUserData] = useState(null);
+const Search = ({ setUserData }) => {
+  const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
+  const [user, setUser] = useState(null); // For storing user data
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
+  const handleSearch = async (e) => {
+    e.preventDefault(); // Prevent form submission
+    setLoading(true);   // Set loading state to true
+    setError("");       // Reset any error messages
+    setUser(null);      // Reset user data before a new search
+
     try {
-      const data = await fetchUserData(username);
-      setUserData(data);
+      const data = await fetchUserData(username); // Call API
+      setUser(data);    // Set the returned user data
+      setUserData(data); // Pass user data up
     } catch (err) {
-      setError('Looks like we can\'t find the user');
+      setError("Looks like we can't find the user"); // Set error message
     } finally {
-      setLoading(false);
+      setLoading(false); // Stop loading
     }
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      {/* Search Form */}
+      <form onSubmit={handleSearch}>
         <input
           type="text"
-          placeholder="Enter GitHub username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          placeholder="Enter GitHub username"
         />
         <button type="submit">Search</button>
       </form>
+
+      {/* Display Loading State */}
       {loading && <p>Loading...</p>}
+
+      {/* Display Error Message */}
       {error && <p>{error}</p>}
-      {userData && (
+
+      {/* Display User Information */}
+      {user && (
         <div>
-          <h3>{userData.name}</h3>
-          <img src={userData.avatar_url} alt={userData.name} width="100" />
-          <p><a href={userData.html_url} target="_blank" rel="noopener noreferrer">View Profile</a></p>
+          <img src={user.avatar_url} alt={`${user.login}'s avatar`} width="100" />
+          <p>Username: {user.login}</p> {/* Display 'login' from API response */}
+          <p>
+            <a href={user.html_url} target="_blank" rel="noopener noreferrer">
+              View Profile
+            </a>
+          </p>
         </div>
       )}
     </div>
