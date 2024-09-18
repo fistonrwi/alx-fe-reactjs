@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { fetchUserData } from './services/apiService'; // Adjust the path as needed
+import { fetchUserData } from '../services/apiService'; // Adjust the path as needed
 
 const Search = ({ setUserData }) => {
   const [username, setUsername] = useState('');
