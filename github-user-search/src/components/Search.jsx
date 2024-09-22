@@ -12,19 +12,19 @@ const Search = ({ setUserData }) => {
   const handleSearch = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(""); // Clear previous error
-    setUsers([]); // Reset user array
+    setError("Looks like we can't find the user");
+    setUsers([]);
 
     try {
       const data = await fetchUserData(username, location, minRepos);
       if (!data || data.length === 0) {
-        setError("Looks like we can't find the user"); // Set the error message
+        setError("");
       } else {
-        setUsers(data); // Set the user data
+        setUsers(data);
         setUserData(data);
       }
     } catch (err) {
-      setError("Looks like we can't find the user"); // Set error on catch
+      setError("Looks like we can't find the user");
     } finally {
       setLoading(false);
     }
