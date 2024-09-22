@@ -12,7 +12,7 @@ const Search = ({ setUserData }) => {
   const handleSearch = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
+    setError("Looks like we can't find the user");
     setUsers([]); // Reset user array before a new search
 
     try {
