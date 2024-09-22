@@ -1,32 +1,37 @@
-import React, { useState } from "react";
-import { fetchUserData } from "../services/githubService"; // Ensure the service is correct
+import React, { useState } from 'react';
+import axios from 'axios';
 
-const Search = ({ setUserData }) => {
-  const [username, setUsername] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(""); // Error message state
-  const [user, setUser] = useState(null); // For storing user data
+const Search = () => {
+  const [username, setUsername] = useState(''); // Input value state
+  const [user, setUser] = useState(null); // User data state
+  const [loading, setLoading] = useState(false); // Loading state
+  const [error, setError] = useState(''); // Error state
 
-  const handleSearch = async (e) => {
-    e.preventDefault(); // Prevent form submission
-    setLoading(true);   // Set loading state to true
-    setError("");       // Reset any error messages
-    setUser(null);      // Reset user data before a new search
-
+  const fetchUserData = async (username) => {
     try {
-      const data = await fetchUserData(username); // Call API
-      setUser(data);    // Set the returned user data
-      setUserData(data); // Pass user data up
+      setLoading(true);
+      setError(''); // Reset error before making the API call
+      const response = await axios.get(`https://api.github.com/users/${username}`);
+      setUser(response.data); // Set user data on success
     } catch (err) {
-      setError("Looks like we can't find the user"); // Set error message
+      setError('Looks like we can’t find the user'); // Display the error message
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false); // Stop loading after the API call
     }
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (username.trim() === '') {
+      setError('Please enter a username');
+      return;
+    }
+    fetchUserData(username);
   };
 
   return (
     <div>
-      {/* Search Form */}
+      <h2>GitHub User Search</h2>
       <form onSubmit={handleSearch}>
         <input
           type="text"
@@ -37,22 +42,15 @@ const Search = ({ setUserData }) => {
         <button type="submit">Search</button>
       </form>
 
-      {/* Display Loading State */}
       {loading && <p>Loading...</p>}
+      
+      {error && <p>{error}</p>}
 
-      {/* Display Error Message */}
-      {error && <p>{error}</p>} {/* Displays the error message */}
-
-      {/* Display User Information */}
       {user && (
         <div>
           <img src={user.avatar_url} alt={`${user.login}'s avatar`} width="100" />
-          <p>Username: {user.login}</p> {/* Display 'login' from API response */}
-          <p>
-            <a href={user.html_url} target="_blank" rel="noopener noreferrer">
-              View Profile
-            </a>
-          </p>
+          <h3>{user.name || user.login}</h3>
+          <p>GitHub Profile: <a href={user.html_url} target="_blank" rel="noopener noreferrer">{user.html_url}</a></p>
         </div>
       )}
     </div>
