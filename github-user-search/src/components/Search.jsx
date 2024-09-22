@@ -2,21 +2,21 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const Search = () => {
-  const [username, setUsername] = useState(''); // Input value state
-  const [user, setUser] = useState(null); // User data state
-  const [loading, setLoading] = useState(false); // Loading state
-  const [error, setError] = useState(''); // Error state
+  const [username, setUsername] = useState('');
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const fetchUserData = async (username) => {
     try {
       setLoading(true);
-      setError(''); // Reset error before making the API call
+      setError('Looks like we cant find the user');
       const response = await axios.get(`https://api.github.com/users/${username}`);
-      setUser(response.data); // Set user data on success
+      setUser(response.data);
     } catch (err) {
-      setError('Looks like we can’t find the user'); // Display the error message
+      setError('Looks like we cant find the user');
     } finally {
-      setLoading(false); // Stop loading after the API call
+      setLoading(false);
     }
   };
 
