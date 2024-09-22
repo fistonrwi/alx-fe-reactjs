@@ -7,20 +7,24 @@ const Search = ({ setUserData }) => {
   const [minRepos, setMinRepos] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [user, setUser] = useState(null);
+  const [users, setUsers] = useState([]);
 
   const handleSearch = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
-    setUser(null);
+    setError(""); // Clear previous error
+    setUsers([]); // Reset user array
 
     try {
       const data = await fetchUserData(username, location, minRepos);
-      setUser(data);
-      setUserData(data);
+      if (!data || data.length === 0) {
+        setError("Looks like we can't find the user"); // Set the error message
+      } else {
+        setUsers(data); // Set the user data
+        setUserData(data);
+      }
     } catch (err) {
-      setError("Looks like we can't find the user");
+      setError("Looks like we can't find the user"); // Set error on catch
     } finally {
       setLoading(false);
     }
@@ -54,19 +58,25 @@ const Search = ({ setUserData }) => {
           Search
         </button>
       </form>
+
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
-      {user && (
+      
+      {users.length > 0 && (
         <div>
-          <img src={user.avatar_url} alt={`${user.login}'s avatar`} width="100" />
-          <p>Username: {user.login}</p>
-          <p>Location: {user.location}</p>
-          <p>Repositories: {user.public_repos}</p>
-          <p>
-            <a href={user.html_url} target="_blank" rel="noopener noreferrer">
-              View Profile
-            </a>
-          </p>
+          {users.map((user) => (
+            <div key={user.id}>
+              <img src={user.avatar_url} alt={`${user.login}'s avatar`} width="100" />
+              <p>Username: {user.login}</p>
+              <p>Location: {user.location}</p>
+              <p>Repositories: {user.public_repos}</p>
+              <p>
+                <a href={user.html_url} target="_blank" rel="noopener noreferrer">
+                  View Profile
+                </a>
+              </p>
+            </div>
+          ))}
         </div>
       )}
     </div>
