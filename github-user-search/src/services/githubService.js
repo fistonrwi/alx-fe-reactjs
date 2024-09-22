@@ -1,12 +1,15 @@
-export const fetchUserData = async (username) => {
+import axios from 'axios';
+
+export const fetchUserData = async (username, location = '', minRepos = 0) => {
   try {
-    const response = await axios.get(`https://api.github.com/users/${username}`, {
+    const query = `${username} location:${location} repos:>=${minRepos}`;
+    const response = await axios.get(`https://api.github.com/search/users?q=${query}`, {
       headers: {
-        Authorization: `token ${process.env.REACT_APP_GITHUB_API_KEY}`, // Ensure API key is set
+        Authorization: `token ${process.env.REACT_APP_GITHUB_API_KEY}`,
       },
     });
-    return response.data;
+    return response.data.items; // Adjust based on API response structure
   } catch (error) {
-    throw new Error('User not found'); // Ensure this throws when user doesn't exist
+    throw new Error('User not found');
   }
 };
