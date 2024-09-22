@@ -7,19 +7,20 @@ const Search = ({ setUserData }) => {
   const [minRepos, setMinRepos] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [users, setUsers] = useState([]); // Change to an array to hold multiple users
+  const [user, setUser] = useState(null);
 
   const handleSearch = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("Looks like we can't find the user");
-    setUsers([]); // Reset user array before a new search
+    setError("");
+    setUser(null);
 
     try {
       const data = await fetchUserData(username, location, minRepos);
-      setUsers(data); // Assume data is an array of user objects
+      setUser(data);
       setUserData(data);
     } catch (err) {
+      // Ensure the correct error message is set
       setError("Looks like we can't find the user");
     } finally {
       setLoading(false);
@@ -56,21 +57,17 @@ const Search = ({ setUserData }) => {
       </form>
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
-      {users.length > 0 && (
+      {user && (
         <div>
-          {users.map((user) => (
-            <div key={user.id}>
-              <img src={user.avatar_url} alt={`${user.login}'s avatar`} width="100" />
-              <p>Username: {user.login}</p>
-              <p>Location: {user.location}</p>
-              <p>Repositories: {user.public_repos}</p>
-              <p>
-                <a href={user.html_url} target="_blank" rel="noopener noreferrer">
-                  View Profile
-                </a>
-              </p>
-            </div>
-          ))}
+          <img src={user.avatar_url} alt={`${user.login}'s avatar`} width="100" />
+          <p>Username: {user.login}</p>
+          <p>Location: {user.location}</p>
+          <p>Repositories: {user.public_repos}</p>
+          <p>
+            <a href={user.html_url} target="_blank" rel="noopener noreferrer">
+              View Profile
+            </a>
+          </p>
         </div>
       )}
     </div>
